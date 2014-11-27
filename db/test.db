@@ -1,0 +1,352 @@
+CREATE DATABASE  IF NOT EXISTS `Reclamos5` /*!40100 DEFAULT CHARACTER SET latin5 COLLATE latin5_bin */;
+USE `Reclamos5`;
+-- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+--
+-- Host: 127.0.0.1    Database: Reclamos5
+-- ------------------------------------------------------
+-- Server version	5.5.40-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Compañias`
+--
+
+DROP TABLE IF EXISTS `Compañias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Compañias` (
+  `Id_compañia` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(144) COLLATE latin5_bin NOT NULL,
+  `Cuenta` varchar(144) COLLATE latin5_bin NOT NULL,
+  `Cantidad` varchar(45) COLLATE latin5_bin DEFAULT NULL,
+  PRIMARY KEY (`Id_compañia`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Compañias`
+--
+
+LOCK TABLES `Compañias` WRITE;
+/*!40000 ALTER TABLE `Compañias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Compañias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Diccionario`
+--
+
+DROP TABLE IF EXISTS `Diccionario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Diccionario` (
+  `Id_diccionario` int(11) NOT NULL AUTO_INCREMENT,
+  `Terminos` varchar(144) COLLATE latin5_bin NOT NULL,
+  PRIMARY KEY (`Id_diccionario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Diccionario`
+--
+
+LOCK TABLES `Diccionario` WRITE;
+/*!40000 ALTER TABLE `Diccionario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Diccionario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Local`
+--
+
+DROP TABLE IF EXISTS `Local`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Local` (
+  `Id_local` int(11) NOT NULL AUTO_INCREMENT,
+  `Region` varchar(144) COLLATE latin5_bin NOT NULL,
+  PRIMARY KEY (`Id_local`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Local`
+--
+
+LOCK TABLES `Local` WRITE;
+/*!40000 ALTER TABLE `Local` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Local` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Reclamos`
+--
+
+DROP TABLE IF EXISTS `Reclamos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Reclamos` (
+  `Id_tweet` int(11) NOT NULL,
+  `Id_compañia` int(11) NOT NULL,
+  `Tipo` varchar(144) COLLATE latin5_bin NOT NULL,
+  `Servicio` varchar(144) COLLATE latin5_bin NOT NULL,
+  PRIMARY KEY (`Id_tweet`,`Id_compañia`),
+  KEY `fk_Twitt_has_Compañias_Compañias1_idx` (`Id_compañia`),
+  KEY `fk_Twitt_has_Compañias_Twitt_idx` (`Id_tweet`),
+  CONSTRAINT `fk_Twitt_has_Compañias_Twitt` FOREIGN KEY (`Id_tweet`) REFERENCES `Tweet` (`Id_tweet`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Twitt_has_Compañias_Compañias1` FOREIGN KEY (`Id_compañia`) REFERENCES `Compañias` (`Id_compañia`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Reclamos`
+--
+
+LOCK TABLES `Reclamos` WRITE;
+/*!40000 ALTER TABLE `Reclamos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Reclamos` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Reclamos5`.`Reclamos_AFTER_INSERT` AFTER INSERT ON `Reclamos` FOR EACH ROW
+BEGIN
+update compañias set Cantidad_re=Cantidad_re+1 
+where compañias.Id_compañias=(select last_id_reclamo());
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `Tweet`
+--
+
+DROP TABLE IF EXISTS `Tweet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Tweet` (
+  `Id_tweet` int(11) NOT NULL AUTO_INCREMENT,
+  `Contenido` varchar(144) COLLATE latin5_bin NOT NULL,
+  `Fecha` date DEFAULT NULL,
+  `Iddiccionario_tweet` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id_tweet`),
+  KEY `fk_Twitt_DIccionario1_idx` (`Iddiccionario_tweet`),
+  CONSTRAINT `fk_Twitt_DIccionario1` FOREIGN KEY (`Iddiccionario_tweet`) REFERENCES `Diccionario` (`Id_diccionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Tweet`
+--
+
+LOCK TABLES `Tweet` WRITE;
+/*!40000 ALTER TABLE `Tweet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Tweet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Usuario`
+--
+
+DROP TABLE IF EXISTS `Usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Usuario` (
+  `Id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `Email` varchar(45) COLLATE latin5_bin DEFAULT NULL,
+  `Nombre_u` varchar(144) COLLATE latin5_bin DEFAULT NULL,
+  `Nick` varchar(144) COLLATE latin5_bin DEFAULT NULL,
+  `Sexo` varchar(144) COLLATE latin5_bin DEFAULT NULL,
+  `Id_local` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id_usuario`),
+  KEY `fk_Usuario_Local1_idx` (`Id_local`),
+  CONSTRAINT `fk_Usuario_Local1` FOREIGN KEY (`Id_local`) REFERENCES `Local` (`Id_local`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Usuario`
+--
+
+LOCK TABLES `Usuario` WRITE;
+/*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `UsuarioTweet`
+--
+
+DROP TABLE IF EXISTS `UsuarioTweet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `UsuarioTweet` (
+  `Id_usuario` int(11) NOT NULL,
+  `Id_tweet` int(11) NOT NULL,
+  PRIMARY KEY (`Id_usuario`,`Id_tweet`),
+  KEY `fk_Usuario_has_Tweet_Tweet1_idx` (`Id_tweet`),
+  KEY `fk_Usuario_has_Tweet_Usuario1_idx` (`Id_usuario`),
+  CONSTRAINT `fk_Usuario_has_Tweet_Usuario1` FOREIGN KEY (`Id_usuario`) REFERENCES `Usuario` (`Id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_has_Tweet_Tweet1` FOREIGN KEY (`Id_tweet`) REFERENCES `Tweet` (`Id_tweet`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin5 COLLATE=latin5_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `UsuarioTweet`
+--
+
+LOCK TABLES `UsuarioTweet` WRITE;
+/*!40000 ALTER TABLE `UsuarioTweet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UsuarioTweet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'Reclamos5'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `Agregar_Tweet` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Agregar_Tweet`()
+BEGIN
+declare con varchar(144);
+declare fe date;
+declare id_com int;
+declare tip varchar(50);
+declare ser varchar (50);
+declare nom_com varchar(50);
+declare user_id int;
+declare user_nom varchar(50);
+select id_compañia as id_com from compañia where compañia.nombre_c=nom_com;
+select id_usuario as user_id from usuario where usuario.nombre_u=user_nom;
+insert into tweet (contenido,fecha) value (@con,@fe);
+insert into  usuariotweet(id_usuario,id_tweet) values (@user_id,( select Last_id_tweet ()));
+insert into reclamo(id_tweet,id_compañia,tipo,servicio) values((select Last_id_usuario()),@id_com,@tip,@ser);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `Last_id_reclamo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Last_id_reclamo`()
+BEGIN
+	declare idcom int;
+    select id_compañia as idcom from reclamos
+    order by id_compañia desc
+    limit 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `Last_id_tweet` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Last_id_tweet`()
+BEGIN
+	select id_tweet as idt from tweet
+    order by id_tweet desc
+    limit 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `Last_id_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Last_id_usuario`()
+BEGIN
+select id_usuario as idus from usuario
+    order by id_usuario desc
+    limit 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `test` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `test`()
+BEGIN
+declare tex text;
+declare user varchar(144);
+insert into Tweet (Contenido) values (@tex);
+insert into Usuario(Nick) values (@user);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-11-25  0:17:03
